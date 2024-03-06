@@ -1,0 +1,67 @@
+<!--
+  @description       : Componente LWC para atualização de território da conta
+  @author            : Lorran Monteiro
+  @group             : Nonobyte
+  @last modified on  : 04/03/2024
+  @last modified by  : Lorran Monteiro
+-->
+<template>
+    <lightning-quick-action-panel header="Assinale o Território da Conta">
+        <template lwc:if={isDataLoaded}>
+            <div class="slds-m-horizontal_small slds-m-top_medium">
+
+                <lightning-record-view-form object-api-name="Account" record-id={recordId}>
+                    <div class="slds-box slds-grid slds-m-bottom_medium slds-theme_shade">
+                        <div class="slds-col slds-size_1-of-2 slds-text-title_bold">
+                            <lightning-output-field field-name="CNPJ__c"></lightning-output-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-text-title_bold">
+                            <lightning-output-field field-name="TerritoryName__c"></lightning-output-field>
+                        </div>
+                    </div>
+                </lightning-record-view-form>
+
+                <lightning-select
+                    name="territorySelect"
+                    label="Selecione o novo território"
+                    value={selectedTerritoryId}
+                    options={territoryOptions}
+                    onchange={handleTerritoryChange}
+                    required>
+                </lightning-select>
+
+                <lightning-input
+                    type="text"
+                    label="Justificativa"
+                    placeholder="Informe uma justificativa..."
+                    value={justification}
+                    maxlength="255"
+                    class="slds-m-top_small slds-m-bottom_large"
+                    onchange={handleJustificationChange}
+                    required>
+                </lightning-input>
+            </div>
+
+            <div slot="footer">
+                <lightning-button
+                    variant="neutral"
+                    label="Cancelar"
+                    onclick={handleCancel}>
+                </lightning-button>
+
+                <lightning-button
+                    variant="brand"
+                    class="slds-m-left_x-small"
+                    label="Salvar"
+                    type="submit"
+                    onclick={handleSubmit}>
+                </lightning-button>
+            </div>
+        </template>
+        <template lwc:else>
+            <div class="slds-is-relative slds-p-vertical_xx-large">
+                <lightning-spinner variant="brand" alternative-text="Carregando..."></lightning-spinner>
+            </div>
+        </template>
+    </lightning-quick-action-panel>
+</template>

@@ -2,11 +2,11 @@
  * @description       : Account Territory Button Controller
  * @author            : SFIEC
  * @group             : SFIEC
- * @last modified on  : 10-02-2023
- * @last modified by  : lucas.montezuma@nonobyte.com.br
+ * @last modified on  : 04/03/2024
+ * @last modified by  : Lorran Monteiro
 **/
 public class AccountTerritoryButtonController {
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<Territory2> getTerritoryList(){
         return [Select Id, Name, Description From Territory2 Where Territory2Model.State = 'Active'];
     }
@@ -16,7 +16,7 @@ public class AccountTerritoryButtonController {
         return Approval.isLocked(accId);
     }
     
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static String getTerritorioInfo(String accId){
         List<Account> acc = [Select Id, TerritoryName__c, CNPJ__c From Account Where Id =: accId];
         
